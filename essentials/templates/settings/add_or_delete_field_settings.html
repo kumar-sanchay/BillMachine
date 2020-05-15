@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+{% load incrementvar %}
+{% load static %}
+{% block link %}<link rel="stylesheet" href="{% static 'css/base/base.css' %}"/>{% endblock link %}
+
+{% block right %}
+    {% set_global val 0 %}
+    <form method="post" action=".">
+    <div class="add-field-div" id="add-field-div">
+        {% for l in bill_title %}
+            {% increment_global val %}
+                {% ifequal l search_field %}
+                <input class="" value="{{ l }}" type="text" name="input" id="in_{% get_global val %}" readonly>
+                <div></div>
+                {% else %}
+                <input class="" value="{{ l }}" type="text" name="input" id="in_{% get_global val %}"/>
+                <button onclick="rm_btn_clicked(event)" id="{% get_global val %}">Remove</button>
+                {% endifequal %}
+
+        {% endfor %}
+    </div>
+            <button onclick="add_field(event)" id="add_field_btn" name="{% get_global val %}">Add Field</button>
+            {% csrf_token %}
+            <button type="submit">Submit</button>
+    </form>
+{% endblock right %}
+
+{% block domready %}
+    <script>
+
+        var val = document.getElementById("add_field_btn").name;
+        var i = parseInt(val) + 1;
+        console.log(i);
+        var div = document.getElementById("add-field-div");
+        function add_field(e){
+            e.preventDefault();
+            var input = document.createElement("input");
+            var remove_btn = document.createElement("button");
+            remove_btn.id = i;
+            remove_btn.innerHTML = "Remove";
+            remove_btn.addEventListener("click", rm_btn_clicked);
+            input.placeholder = "Type Here";
+            input.name = "input";
+            input.id = "in_"+i;
+            div.appendChild(input);
+            div.appendChild(remove_btn);
+            i++;
+        }
+
+        function rm_btn_clicked(e){
+            e.preventDefault();
+            var btn = e.target;
+            var input = document.getElementById("in_"+btn.id);
+            input.remove();
+            btn.remove();
+        }
+
+    </script>
+{% endblock domready %}

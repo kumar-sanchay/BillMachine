@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block link %}<link rel="stylesheet" href="{% static 'css/base/base.css' %}"/>{% endblock link %}
+
+{% block right %}
+        <a href="{% url 'essentials:company_details_setting' company_pk company_slug %}" class="back-view-anchor"><div class="back-view">
+            <p>Company Details</p>
+        </div></a>
+        <a href="{% url 'essentials:add_or_delete_fields' company_pk company_slug %}" class="back-view-anchor"><div class="back-view">
+            <p>Add or Delete Fields</p>
+        </div></a>
+        <a href="{% url 'essentials:search_field_company' company_pk company_slug %}" class="back-view-anchor"><div class="back-view">
+            <p>Add Search Field</p>
+        </div></a>
+        <a href="{% url 'essentials:add_default' company_pk company_slug %}" class="back-view-anchor"><div class="back-view">
+            <p>Add Default Values</p>
+        </div></a>
+        <a href="{% url 'essentials:show_default' company_pk company_slug %}" class="back-view-anchor"><div class="back-view">
+            <p>Show Default Values</p>
+        </div></a>
+        <a href="{% url 'essentials:add_expression' company_pk company_slug %}" class="back-view-anchor"><div class="back-view">
+            <p>Add Field Expressions</p>
+        </div></a>
+        <a href="{% url 'essentials:add_summation_field' company_pk company_slug %}" class="back-view-anchor"><div class="back-view">
+            <p>Add Summation Field</p>
+        </div></a>
+        <div class="back-view">
+            <p>Delete All Created Bills</p>
+        </div>
+        <div class="back-view">
+            <p>Delete Company</p>
+         </div>
+
+{% endblock right%}

@@ -1,0 +1,9 @@
+
+{% for i, j in data_list.items %}
+    <tr id="tr_{{ i }}">
+    {% for key, val in j.items %}
+        <td>{{val}}</td>
+    {% endfor %}
+           <td><button class="table-delete-button" id="{{ i }}" onclick="delete_record(event)">Delete</button></td>
+    </tr>
+{% endfor %}

@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block link %}<link rel="stylesheet" href="{% static 'css/base/base.css' %}"/>{% endblock link %}
+
+{% block right %}
+    <div class="change-personal-details">
+        <h3>Change Your Personal Details Below and click the Save Changes for Updating your details</h3>
+        <form method="post" action=".">
+            {{ form.as_p }}
+        <div>
+            {% csrf_token %}
+            <button type="submit" class="change-personal-details-btn">Save Changes</button>
+        </div>
+        </form>
+
+    </div>
+{% endblock right %}

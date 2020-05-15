@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}Profile{% endblock title %}
+{% block link %}<link rel="stylesheet" href="{% static 'css/base/base.css' %}"/>{% endblock link %}
+{% block right %}
+	<div class="recent-title-msg">
+		<p>Your recent activities!!</p>
+	</div>
+	<div id="activity-div">
+		{% include 'activity.html' %}
+	</div>
+{% endblock right %}
+
+{% block domready %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+	<script>
+		var csrftoken = Cookies.get('csrftoken');
+		var page = 1;
+		var block = false;
+		var end_page = false;
+
+		var element = document.getElementById('split');
+		var split_ = window.getComputedStyle(element);
+		var split_div = split_.getPropertyValue('position');
+		function csrfSafeMethod(method){
+			return (/^(GET|TRACE|HEAD|OPTIONS)$/).test(method);
+		}
+
+		$.ajaxSetup({
+			beforeSend : function(xhr, settings){
+				if(!csrfSafeMethod(settings.type) && !this.crossDomain){
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				}
+			}
+		});
+
+		if(split_div != 'fixed'){
+			$(window).scroll(function(){
+				var margin = $(document).height() - $(window).height() - 200;
+				if($(window).scrollTop() > margin && !block && !end_page){
+					page += 1;
+					block = true;
+					$.get('?page='+ page, function(data){
+						if(data == ''){
+							end_page = true;
+						}else{
+							block = false;
+							$('#activity-div').append(data);
+						}
+					});
+				}
+			});
+
+		}else{
+			$('#right').scroll(function(){
+				var margin = $(document).height() - $('#right').height() - 200;
+				if($('#right').scrollTop() > margin && !block && !end_page){
+					page += 1;
+					block = true;
+					$.get('?page='+ page, function(data){
+						if(data == ''){
+							end_page = true;
+						}else{
+							block = false;
+							$('#activity-div').append(data);
+						}
+					});
+				}
+			});
+		}
+	</script>
+{% endblock domready %}

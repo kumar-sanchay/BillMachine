@@ -1,0 +1,46 @@
+
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block link %}<link rel="stylesheet" href="{% static 'css/base/base.css' %}"/>{% endblock link%}
+
+{% block right %}
+	<div class="search-field-msg">
+		<h3>Select any one of the field, which will act as your search field and will help to auto-complete while creating bills.</h3>
+	</div><br><br>
+		<form action="." method="post">
+			<div class="search-field-main">
+                {% for l in list %}
+					{% if l in summation_field %}
+						<label>{{ l }}: </label>
+						<input type="checkbox" name="n" id="{{ l }}" value="{{ l }}" checked/>
+					{% else %}
+						<label>{{ l }}: </label>
+						<input type="checkbox" name="n" id="{{ l }}" value="{{ l }}"/>
+					{% endif %}
+                {% endfor %}
+<!--			-->
+<!--					<label>Field name: </label>-->
+<!--					<input type="radio" name="n"/>-->
+<!--				-->
+<!--					<label>Field name: </label>-->
+<!--					<input type="radio" name="n"/>-->
+<!--			-->
+<!--					<label>Field name: </label>-->
+<!--					<input type="radio" name="n"/>-->
+			</div><br><br>
+			{% csrf_token %}
+			<div class="search-field-btn-class">
+				<div class="search-field-btn">
+						<button class="search-field-button-submit" type="submit">Save and Complete</button>
+				</div>
+				<div class="search-field-btn">
+						<button class="search-field-button-afterwards">Proceed Without Saving the Search Field</button>
+				</div>
+			</div>
+
+		</form><br><br>
+	<div class="search-field-msg">
+		<p>You will be able to add search field afterwards by locating to setting of the company profile.</p>
+	</div><br><br>
+{% endblock right %}

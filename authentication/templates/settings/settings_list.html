@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block link %}<link rel="stylesheet" href="{% static 'css/base/base.css' %}"/>{% endblock link %}
+
+{% block right %}
+    <a href="{% url 'authentication:personal_details_settings' %}" class="back-view-anchor"><div class="back-view">
+        <p>Personal Details</p>
+    </div></a>
+    <div class="back-view">
+        <p>Change Password</p>
+    </div>
+    <a href="{% url 'authentication:logout_url' %}" class="back-view-anchor"><div class="back-view">
+        <p>Log Out</p>
+    </div></a>
+
+{% endblock right %}

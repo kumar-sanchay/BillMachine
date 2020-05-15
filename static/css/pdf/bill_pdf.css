@@ -1,0 +1,55 @@
+
+.body{
+	margin: 0px;
+	padding: 0px;
+}
+
+.company-details{
+	width: 98%;
+	text-align: center;
+}
+
+.heading{
+	font-weight: 600;
+}
+
+.credentials{
+	width: 99%;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.credentials td{
+	border: 1px solid black;
+}
+
+.sender-info{
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	width: 99%;
+	margin:0 auto;
+}
+
+.sender-info div{
+	border: 1px solid black;
+}
+
+.bill-data{
+	width: 99%;
+	text-align: center;
+}
+
+.bill-data table{
+	margin: 0 auto;
+	width: 97%;
+}
+
+.bill-data table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+.bill-data tr th, td{
+	padding: 0px 5px 0px 5px;
+
+}

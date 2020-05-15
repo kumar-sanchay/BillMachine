@@ -1,0 +1,64 @@
+
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block link %}<link rel="stylesheet" href="{% static 'css/base/base.css' %}"/>{% endblock link%}
+
+{% block right %}
+			<div class="white-background">
+			<div class="expression-explain">
+			<h3>Here you can relate your fields with each other by adding expressions as shown below.</h3>
+			<img src="{% static 'images/expression_exp.png' %}"/>
+			<h3>Remember to set your background field expression careful, it may affect the output.</h3>
+		</div><br><br>
+		<form method="post" action=".">
+		<div class="expression-top_label">
+            {% for t, val in title.items %}
+                <div>
+                    <p>{{ t }}</p>
+                </div>
+                <div class="expression-input-class">
+                    <input type="text" placeholder="Write here" name="{{ t }}" value="{{ val }}">
+                </div>
+            {% endfor %}
+<!--			<div>-->
+<!--				<p>Title1</p>-->
+<!--			</div>-->
+<!--			<div class="input-class">-->
+<!--				<input type="text"/>-->
+<!--			</div>-->
+
+<!--			<div>-->
+<!--				<p>Title2</p>-->
+<!--			</div>-->
+<!--			<div class="input-class">-->
+<!--				<input type="text"/>-->
+
+<!--			</div>-->
+
+<!--			<div>-->
+<!--				<p>Title3</p>-->
+<!--			</div>-->
+<!--			<div class="input-class">-->
+<!--				<input type="text"/>-->
+
+<!--			</div>-->
+
+<!--			<div>-->
+<!--				<p>Title4</p>-->
+<!--			</div>-->
+<!--			<div class="input-class">-->
+<!--				<input type="text"/>-->
+
+<!--			</div>-->
+
+		</div><br><br>
+
+		<div>
+			{% csrf_token %}
+			<button class="expression-save-btn" type="submit">Save Changes</button>
+		</div>
+		</form>
+			</div>
+
+{% endblock right %}

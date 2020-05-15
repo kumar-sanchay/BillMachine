@@ -1,0 +1,324 @@
+{% load static %}
+{% load incrementvar %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Bill</title>
+		<link rel="stylesheet" href="{% static 'css/bill.css' %}"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+
+	<body>
+	{% set_global global 0 %}
+	{% set_global i 0 %}
+	{% set_global src 0 %}
+	<form method="post" id="form">
+		{% csrf_token %}
+	</form>
+
+		<div class=initials>
+			<div class="input-class">
+				<input type="text" placeholder="To" class="to-class" id="to"/>
+			</div>
+			<div class="invoice_label" >
+				<p>Invoice No:</p>
+				<input type="text"  id="invoice_no" value="{{ invoice_no }}">
+			</div>
+		</div>
+		<br>
+
+			<div class="entries" id="entries">
+
+				{% for bill in bill_title %}
+				{% increment_global i %}
+				{% ifequal bill search_field %}
+					<input type="text" placeholder="{{bill}}" id="{% get_global i %}" onchange="keyup(event)" name="{{bill}}"
+					list="search-list" oninput="search(event)">
+						<datalist id="search-list">
+						</datalist>
+				{% else %}
+					<input type="text" placeholder="{{bill}}" id="{% get_global i %}" onchange="keyup(event)" name="{{bill}}">
+				{% endifequal %}
+				{% endfor %}
+
+			<button class="enter" id="enter" onclick="clicked()">Enter</button>
+			</div>
+
+
+		<br>
+
+		<div class="table-container">
+
+			<table id="table">
+				<tr>
+					<th>Sr</th>
+					{% for bill in bill_title %}
+						<th>{{bill}}</th>
+					{% endfor %}
+				</tr>
+				<tr id="result">
+					<td>
+						Total:
+					</td>
+					{% for i in bill_title %}
+						{% increment_global global %}
+						<td id="result_{% get_global global %}" data-id="{{ i }}">
+						</td>
+					{% endfor %}
+				</tr>
+			</table>
+		</div><br>
+	    <div>
+			<button class="save" onclick="save_bill()">Save</button>
+		</div>
+
+	</body>
+	<script>
+		var submit = false;
+		var sr=parseInt({% get_global src %});
+		var invoice_no = {{invoice_no}};
+		n = {% get_global i %};
+
+		var final_dict = new Object();
+		var final_result_dict = new Object();
+
+		var protocol = window.location.protocol;
+		ws_protocol = "ws://";
+		if(protocol=="https:"){
+			ws_protocol = "wss://";
+		}
+
+		web_socket_url = ws_protocol + window.location.host + window.location.pathname;
+		const web_socket = new WebSocket(web_socket_url);
+
+		web_socket.onopen = function(e){
+			console.log("open", e);
+		}
+
+		web_socket.onerror = function(e){
+			console.log("error", e);
+		}
+
+		web_socket.onmessage = function(e){
+			console.log(e.data);
+			var data = JSON.parse(e.data);
+			var datalist = document.getElementById("search-list");
+			console.log(data["result_id"]);
+			if(data["result_id"]=="1"){
+				datalist.innerHTML = "";
+				for(var i in data["result"]){
+
+					var opt = document.createElement("option");
+					opt.value = i;
+					var o = document.createAttribute("name");
+					o.value = i;
+					opt.setAttributeNode(o);
+					opt.id = data["result"][i];
+					console.log("jsj");
+					console.log(opt);
+					datalist.appendChild(opt);
+				}
+			}else if(data["result_id"]=="2"){
+					let lst = data["result"];
+					console.log(lst);
+					for(var i=1; i<=n; i++){
+						let t = {{ table_list|safe }};
+						let b = {{ bill_title|safe }};
+						let input_val = document.getElementsByName(t[i])[0];
+						if(input_val.value==""){
+							input_val.value = lst[i];
+						}
+					}
+			}else if(data["result_id"]=="done"){
+				submit = false;
+				console.log("saved");
+				document.getElementById('form').submit();
+			}
+			console.log(data["result"]);
+		}
+
+
+		function search(e){
+			var in_val = e.target.value;
+			var datalist = document.getElementById("search-list");
+			console.log(in_val);
+				var opt = document.getElementsByName(in_val)[0];
+				console.log(opt);
+				if(opt != null){
+					console.log("goit");
+					web_socket.send(JSON.stringify({
+					"search_id": "2",
+					"search_data": in_val,
+					"index": opt.id
+					}));
+				}else{
+
+					web_socket.send(JSON.stringify({
+						"search_id": "1",
+						"search_data": in_val
+					}));
+			}
+			}
+
+
+		function clicked(e){
+			var temp_dict = {};
+			var btn = document.getElementById("enter");
+			var ids = [];
+			for(var i=1; i<=n; i++){
+				var str_id = i.toString();
+				var val = document.getElementById(str_id);
+				ids[i] = val.value;
+				temp_dict[val.name] = val.value;
+				val.value = "";
+			}
+			final_dict[sr+1] = temp_dict;
+			console.log(final_dict);
+			var tab = document.getElementById("table");
+			var result_tr = document.getElementById("result");
+			var tr = document.createElement("tr");
+			tr.id = "tr_"+(sr+1).toString();
+			var t = document.createElement("td");
+			t.innerHTML = ++sr;
+			tr.appendChild(t);
+			for(var i=1; i<=n; i++){
+				result_td_id = "result_"+i.toString();
+				var result_td = document.getElementById(result_td_id);
+				var td = document.createElement("td");
+				td.innerHTML = ids[i];
+				tr.appendChild(td);
+				try{
+					let val = parseFloat(ids[i]);
+					let result_val = result_td.innerHTML;
+					if(isNaN(parseFloat(result_val))){
+						if(result_val!="None"){
+							if(!isNaN(val)){
+								result_td.innerHTML = val;
+							}else{
+								result_td.innerHTML = "None";
+							}
+						}
+					}else if(result_val!="None"){
+						console.log(ids[i]);
+						if(ids[i]!=''){
+							let r = parseFloat(result_val) + parseFloat(val);
+							console.log(parseFloat(result_val));
+							console.log(val);
+							console.log(r);
+							result_td.innerHTML = r;
+					}
+					}
+				}catch(err){
+					console.log(err);
+				}
+			}
+
+			var remove_btn = document.createElement("button");
+			remove_btn.innerHTML = "Remove";
+			remove_btn.id = sr.toString();
+			remove_btn.classList.add("remove_btn");
+			remove_btn.addEventListener("click", remove_row);
+			tr.appendChild(remove_btn);
+			result_tr.parentNode.insertBefore(tr, result_tr);
+			ids[0]=sr;
+		}
+
+		function remove_row(e){
+			 var btn = e.target;
+			 var tr = document.getElementById("tr_"+btn.id);
+			 var j = 1;
+			 console.log(final_dict);
+			 try{
+			 	delete final_dict[parseInt(btn.id)];
+			 }catch(err){
+				console.log(err);
+			 }
+			 console.log(final_dict);
+			 for(var i=1; i<=n; i++){
+			 	let result = document.getElementById("result_"+i.toString());
+				if(result.innerHTML!="None"){
+					result.innerHTML = parseFloat(result.innerHTML) - parseFloat(tr.childNodes[j].innerHTML);
+					console.log(result.innerHTML);
+				}
+			 	j++;
+			 }
+			 tr.remove();
+			 btn.remove();
+			 }
+
+		function keyup(e){
+			var src = e.target;
+			var src_input = src.value;
+			var id = src.id;
+			for(id; id<=n; id++){
+				keyup_process(document.getElementById(id));
+			};
+
+		}
+
+		function keyup_process(src){
+			if("{{is_exp}}"=="true"){
+				var g = {{ graph|safe }};
+				var t = {{ table_list|safe }};
+				let a = g[t.indexOf(src.name)];
+
+				var src_input = src.value;
+				console.log(src_input);
+				console.log(a);
+				for (var i of a){
+				//check for multiple field
+					if(src_input.length==0){
+					document.getElementsByName(t[i.des])[0].value = "";
+					continue;
+				}
+						let exp = i.exp;
+						let regex = /{[\w]*}/g;
+						let fields = exp.match(regex);
+						console.log(exp.match(regex));
+						var result = 0;
+						var check_eval = false;
+						for(var j of fields){
+
+							let val = document.getElementsByName(j.substring(1, j.length-1))[0].value;
+							exp = exp.replace(j, val);
+						}
+						try{
+							var evaluated = eval(exp);
+							document.getElementsByName(t[i.des])[0].value = eval(exp);
+						}catch(err){
+							document.getElementsByName(t[i.des])[0].value = exp;
+						}
+					}
+				}
+
+		}
+
+		function save_bill(){
+			var invoices = document.getElementById('invoice_no').value;
+			var tos = document.getElementById('to').value;
+			var result_tr = document.getElementById('result');
+			for(var i=1; i<={% get_global global %}; i++){
+				var temp_td = document.getElementById('result_'+i);
+				if(temp_td.innerHTML!='None')
+					final_result_dict[temp_td.getAttribute('data-id')] = temp_td.innerHTML;
+				else
+					final_result_dict[temp_td.getAttribute('data-id')] = '';
+			}
+			console.log(final_result_dict);
+			if(submit==false){
+				submit = true;
+				web_socket.send(JSON.stringify({
+					'search_id': 'done',
+					'search_data': 'none',
+					'invoice': invoices,
+					'to': tos,
+					'data': JSON.stringify(final_dict),
+					'result_data': JSON.stringify(final_result_dict),
+				}));
+		}
+		}
+
+	</script>
+<script>
+</script>
+</html>

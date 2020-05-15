@@ -1,0 +1,31 @@
+
+{% extends 'base/base.html' %}
+
+{% load static %}
+{% block link %}<link rel="stylesheet" href="{% static 'css/base/base.css' %}"/>{% endblock link%}
+
+{% block right %}
+		<div class="white-background">
+			<div class="add-default-msg">
+			<p>Fill the fields default values below which will help you to auto-complete the fields during making bills and hence saving your time.</p>
+		</div>
+		<br><br>
+        <form method="post" action=".">
+		<div class="add-default-input-div">
+			{{ form.as_p }}
+            {% for t in title %}
+                <div class="add-default-label-class">
+                    <label>{{ t }}: </label>
+                </div>
+                <div class="add-default-input-class">
+                    <input type="text" placeholder="Write here.." id="{{t}}" name="{{ t }}" {% ifequal required t %}required{% endifequal %}/>
+                </div>
+            {% endfor %}
+		</div><br><br>
+		{% csrf_token %}
+		<div class="add-default-btn">
+			<button class="add-default-button-submit" type="submit">Save and Next</button>
+		</div>
+		</form>
+		</div>
+{% endblock right %}

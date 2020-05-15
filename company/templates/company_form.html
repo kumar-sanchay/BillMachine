@@ -1,0 +1,81 @@
+
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block link %}<link rel="stylesheet" href="{% static 'css/base/base.css' %}"/>{% endblock link %}
+
+{% block right %}
+	<form method="post" action=".">
+			<div class="main-div-create-company">
+				<h3>Add the company details below which will be added in the template bill.</h3>
+				{{ form.as_p }}
+
+			</div><br>
+			{% csrf_token %}
+			<div class="list-create-company" id="list">
+				<p>Add columns or titles which will be included in your by clicking Add Columns below.<br>Some common columns are given below. If you want to remove this columns press remove button.</p>
+			</div>
+			<br>
+		<br>
+		<div class="add_title_btn-create-company">
+			<button onclick="addList(event)">Add Columns</button>
+		</div><br>
+			<div class="add_title_btn-create-company">
+				<button type="submit">Submit</button>
+			</div>
+		</form>
+{% endblock right %}
+
+	{% block domready %}
+	<script>
+		var i = 0;
+		var values = ["Product", "Description", "Quantity", "Rate", "Discount", "Total Amount"];
+		for(var j=0; j<values.length; j++){
+		var l = document.getElementById("list");
+		//var l_btn = document.getElementById("list-btn_btn");
+			var new_input = document.createElement("input");
+			var new_btn = document.createElement("button");
+			var br = document.createElement("br");
+			new_input.id = i*10;
+			new_input.name = "input";
+		new_input.classList.add("input-create-company");
+		new_input.value=values[i];
+			new_btn.id = i;
+		new_btn.classList.add("remove-btn-create-company");
+			new_btn.innerHTML = "Remove";
+			new_btn.addEventListener("click", btn_clicked);
+
+			l.appendChild(new_input);
+			l.appendChild(new_btn);
+			i++;
+		}
+
+			function addList(e){
+			e.preventDefault();
+			var l = document.getElementById("list");
+		//var l_btn = document.getElementById("list-btn_btn");
+			var new_input = document.createElement("input");
+			var new_btn = document.createElement("button");
+			var br = document.createElement("br");
+			new_input.id = i*10;
+			new_input.name = "input";
+		new_input.classList.add("input-create-company");
+		new_input.placeholder="Column Name";
+			new_btn.id = i;
+		new_btn.classList.add("remove-btn-create-company");
+			new_btn.innerHTML = "Remove";
+			new_btn.addEventListener("click", btn_clicked);
+
+			l.appendChild(new_input);
+			l.appendChild(new_btn);
+			i++;
+			}
+
+			function btn_clicked(e){
+			var btn = e.target;
+			var new_input = document.getElementById(btn.id*10);
+			btn.remove();
+			new_input.remove();
+			}
+		</script>
+	{% endblock domready %}

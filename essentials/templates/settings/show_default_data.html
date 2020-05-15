@@ -1,0 +1,103 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block link %}<link rel="stylesheet" href="{% static 'css/base/base.css' %}"/>{% endblock link %}
+
+{% block right %}
+        <div class="main-div-table">
+
+			<table id="table" class="default-table">
+				<tr>
+                    {% for h in heading %}
+                        <th>{{ h }}</th>
+                    {% endfor %}
+				</tr>
+                {% for i, j in data_list.items %}
+                    <tr id="tr_{{ i }}">
+                    {% for key, val in j.items %}
+                        <td>{{val}}</td>
+                    {% endfor %}
+                           <td><button class="table-delete-button" id="{{ i }}" onclick="delete_record(event)">Delete</button></td>
+                    </tr>
+                {% endfor %}
+			</table>
+
+		</div>
+{% endblock right %}
+
+{% block domready %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script>
+        var csrfToken = Cookies.get("csrftoken");
+        console.log(csrfToken);
+        var block = false;
+        var end_page = false;
+        var cur = parseInt({{ cursor }});
+
+		var element = document.getElementById('split');
+		var split_ = window.getComputedStyle(element);
+		var split_div = split_.getPropertyValue('position');
+
+        function csrfSafeMethod(method){
+            return (/^(GET|HEAD|TRACE|OPTION)$/).test(method);
+        }
+
+        $.ajaxSetup({
+            beforeSend : function(xhr, settings){
+                if(!csrfSafeMethod(settings.type) && !this.crossDomain){
+                    xhr.setRequestHeader('X-CSRFToken', csrfToken);
+                }
+            }
+        });
+
+        if(split_div == 'fixed'){
+            $('#right').scroll(function(){
+                var margin = $(document).height() - $('#right').height() - 200;
+                if($('#right').scrollTop() > margin && !block && !end_page){
+                    block = true;
+                    $.get('?cur='+ cur, function(data){
+                        if(data==''){
+                            end_page = true;
+                        }else{
+                            block = false;
+                            $('#table-data').append(data);
+                            cur = parseInt(data.cursor);
+                        }
+
+                    });
+                }
+            });
+        }else{
+        $(window).scroll(function(){
+                var margin = $(document).height() - $(window).height() - 200;
+                if($(window).scrollTop() > margin && block==false && end_page==false){
+                    block = true;
+                    $.get('?cur='+ cur, function(data){
+                    console.log(data.length);
+                        if(data.length==1){
+                            end_page = true;
+                        }else{
+                            block = false;
+                            console.log(data);
+                            $('#table').append(data);
+                            cur = parseInt(data.cursor);
+                        }
+
+                    });
+                }
+            });
+
+        }
+
+        function delete_record(e){
+            var btn = e.target;
+            $.post('{% url 'essentials:delete_default_data' pk slug %}', {'index': btn.id}, function(data){
+                if(data['status']=='ok'){
+                    var tr = document.getElementById("tr_"+btn.id);
+                    tr.remove();
+                }
+            });
+        }
+    </script>
+{% endblock domready %}

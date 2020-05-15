@@ -1,0 +1,152 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block link %}<link rel="stylesheet" href="{% static 'css/base/base.css' %}"/>{% endblock link %}
+
+{% block right %}
+    <div class="company-created">
+					<div class="img-class">
+						<object data="{% static 'svg/building.svg' %}" type="image/svg+xml" class="img-class-obj"></object>
+					</div>
+					<div class="title">
+						<p class="main-title">{{ c.company_name }}</p>
+						<p>{{ c.company_email }}</p>
+						<p>{{ c.created }}</p>
+						<p>{{ c.city }}, {{ c.state }}</p>
+					</div>
+					<div class="show-btn-cls">
+						<button class="show-btn">Create Bill</button>
+
+					</div>
+				</div>
+				<div class="company-details">
+				<details>
+					<summary>Company Details</summary>
+					<div class="company-details-list">
+						{% for head, val in c.get_fields %}
+							<p class="company-details-heading">{{ head }} :</p>
+							<p class="company-details-val">{{ val }}</p>
+						{% endfor %}
+<!--						<p class="company-details-heading">Address :</p>-->
+<!--						<p class="company-details-val">{{ c.address }}</p>-->
+<!--						<p class="company-details-heading">Mobile :</p>-->
+<!--						<p class="company-details-val">{{ c.mobile }}</p>-->
+<!--						<p class="company-details-heading">Tel :</p>-->
+<!--						<p class="company-details-val">{{ c.tel }}</p>-->
+<!--						<p class="company-details-heading">City :</p>-->
+<!--						<p class="company-details-val">{{ c.city }}</p>-->
+<!--						<p class="company-details-heading">State :</p>-->
+<!--						<p class="company-details-val">Maharashtra</p>-->
+<!--						<p class="company-details-heading">Pincode :</p>-->
+<!--						<p class="company-details-val">411018</p>-->
+<!--						<p class="company-details-heading">Pan no :</p>-->
+<!--						<p class="company-details-val">Some random number</p>-->
+<!--						<p class="company-details-heading">Aadhar no:</p>-->
+<!--						<p class="company-details-val">Some Random Number</p>-->
+<!--						<p class="company-details-heading">Bank Name :</p>-->
+<!--						<p class="company-details-val">SBI</p>-->
+<!--						<p class="company-details-heading">Account No :</p>-->
+<!--						<p class="company-details-val">Some Random Number</p>-->
+<!--						<p class="company-details-heading">IFSC Code :</p>-->
+<!--						<p class="company-details-val">Some Random Number</p>-->
+<!--						<p class="company-details-heading">GSTIn No :</p>-->
+<!--						<p class="company-details-val">Some Random number</p>-->
+<!--						<p class="company-details-heading">CGST No :</p>-->
+<!--						<p class="company-details-val">Some Random number</p>-->
+<!--						<p class="company-details-heading">SGST No :</p>-->
+<!--						<p class="company-details-val">Some Random number</p>-->
+<!--						<p class="company-details-heading">IGST No :</p>-->
+<!--						<p class="company-details-val">Some Random number</p>-->
+<!--						<p class="company-details-heading">City Code :</p>-->
+<!--						<p class="company-details-val">Some Random number</p>-->
+<!--						<p class="company-details-heading">State Code :</p>-->
+<!--						<p class="company-details-val">Some Random number</p>-->
+<!--						<p class="company-details-heading">Total Bills Prepared :</p>-->
+<!--						<p class="company-details-val">Some Random number</p>-->
+					</div>
+				</details>
+				</div>
+				<div class="bill-msg">
+					<p>Prepared Bills</p>
+				</div>
+<!--				<div class="company-created">-->
+<!--					<div class="img-class">-->
+<!--						<object data="list.svg" type="image/svg+xml" class="img-class-obj"></object>-->
+<!--					</div>-->
+<!--					<div class="title">-->
+<!--						<p class="main-title">Company Name</p>-->
+<!--						<p>To: XYZ</p>-->
+<!--						<p>03-05-2020</p>-->
+<!--					</div>-->
+<!--					<div class="show-btn-cls">-->
+<!--						<button class="show-btn">Show</button>-->
+<!--						<button class="remove-btn">Remove</button>-->
+<!--						<div class="download-link-div">-->
+<!--							<a href="#" class="download-link"><p>Download</p></a>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--    </div>-->
+	<div id="bill-list">
+		{% include 'bill_display.html' %}
+	</div>
+{% endblock %}
+
+{% block domready %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+	<script>
+		var csrfToken = Cookies.get('csrftoken');
+		var page = 1;
+		var block = false;
+		var end_page = false;
+
+		var element = document.getElementById("split");
+		var s = window.getComputedStyle(element);
+		var split = s.getPropertyValue('position');
+		function csrfSafeMethod(method){
+			return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+		}
+
+		$.ajaxSetup({
+			beforeSend: function(xhr, settings){
+				if(!csrfSafeMethod(settings.type) && !this.crossDomain){
+					xhr.setRequestHeader("X-CSRFToken", csrfToken);
+				}
+			}
+		});
+
+		if(split=='fixed'){
+			$('#right').scroll(function(){
+				var margin = $(document).height() - $('#right').height() - 200;
+				if($('#right').scrollTop() > margin && !block && !end_page){
+					page += 1;
+					block = true;
+					$.get('?page='+ page, function(data){
+						if(data == ''){
+							end_page = true;
+						}else{
+							block = false;
+							$('#bill-list').append(data);
+						}
+					})
+				}
+			});
+		}else{
+			$(window).scroll(function(){
+				var margin = $(document).height() - $(window).height() - 200;
+				if($(window).scrollTop() > margin && !block && !end_page){
+					page += 1;
+					block = true;
+					$.get('?page='+ page, function(data){
+						if(data == ''){
+							end_page = true;
+						}else{
+							block = false;
+							$('#bill-list').append(data);
+						}
+					})
+				}
+			});
+		}
+	</script>
+{% endblock domready %}

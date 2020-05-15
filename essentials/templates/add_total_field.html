@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		 <meta charset="UTF-8">
+		<title>Select Total Field</title>
+	</head>
+	<link rel="stylesheet" href="{% static 'css/add_total_fields.css' %}"/>
+	<body>
+	<div class="msg">
+		<h3>Select any field, which will act as your total field and will add calculations according to the give gst value.</h3>
+	</div><br><br>
+		<form method="post" action=".">
+			<div class="main">
+                   {% for t in title %}
+
+						<label>{{ t }}</label>
+						{% if t in lst %}
+							<input type="checkbox" name="total_field" value="{{ t }}" checked/>
+						{% else %}
+							<input type="checkbox" name="total_field" value="{{ t }}"/>
+						{% endif %}
+                    {% endfor %}
+
+<!--					<label>Field name: </label>-->
+<!--					<input type="checkbox" name="total_field[]" value=""/>-->
+
+<!--					<label>Field name: </label>-->
+<!--					<input type="checkbox" name="total_field[]" value=""/>-->
+
+<!--					<label>Field name: </label>-->
+<!--					<input type="checkbox" name="total_field[]" value=""/>-->
+
+			</div>
+            <br><br>
+			{% csrf_token %}
+			<div class="btn-class">
+				<div class="btn">
+						<button class="button-submit" type="submit">Save and Complete</button>
+				</div>
+				<div class="btn">
+					<a href="{% url 'essentials:settings' pk slug %}" class="button-afterwards">Proceed Without Saving the Search Field</a>
+				</div>
+			</div>
+
+		</form><br><br>
+	</body>
+	<script>
+
+	</script>
+</html>

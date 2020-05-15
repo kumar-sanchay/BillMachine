@@ -1,0 +1,20 @@
+{% load static %}
+{% for bill in bills %}
+				<div class="company-created">
+					<div class="img-class">
+						<object data="{% static 'svg/list.svg' %}" type="image/svg+xml" class="img-class-obj"></object>
+					</div>
+					<div class="title">
+						<p class="main-title">{{ bill.company.company_name }}</p>
+						<p>To: {{ bill.to }}</p>
+						<p>{{ bill.created }}</p>
+					</div>
+					<div class="show-btn-cls">
+						<button class="show-btn">Show</button>
+						<button class="remove-btn">Remove</button>
+						<div class="download-link-div">
+							<a href="{% url 'fileStorage:create_pdf' c.pk c.slug bill.pk %}" class="download-link"><p>Download</p></a>
+						</div>
+					</div>
+                </div>
+{% endfor %}

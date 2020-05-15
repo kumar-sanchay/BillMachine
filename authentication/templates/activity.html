@@ -1,0 +1,22 @@
+{% load static %}
+{% for act in activity %}
+    <div class="company-created">
+        <div class="img-class">
+            {% if act.company %}
+                <object data="{% static 'svg/building.svg' %}" type="image/svg+xml" class="img-class-obj"></object>
+            {% elif act.bill %}
+                <object data="{% static 'svg/bill.svg' %}" type="image/svg+xml" class="img-class-obj"></object>
+            {% else %}
+                <object data="{% static 'svg/settings.svg' %}" type="image/svg+xml" class="img-class-obj"></object>
+            {% endif %}
+        </div>
+        <div class="title">
+                <p class="main-title">{{ act.activity }}</p>
+            <p>{{ act.created }}</p>
+        </div>
+        <div class="show-btn-cls">
+            <button class="show-btn">Show</button>
+            <button class="remove-btn">Remove</button>
+        </div>
+    </div>
+{% endfor %}
