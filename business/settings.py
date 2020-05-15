@@ -25,7 +25,7 @@ SECRET_KEY = '6hr+*)vma&9dqsw(p#^iafps1*aqe8=8+t%r99b4eyalr&d#rs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://billmachine.herokuapp.com', 'billmachine.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -81,8 +81,10 @@ ASGI_APPLICATION = "business.routing.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'business_app',
+        'USER': 'sanchay',
+        'PASSWORD': 'sunnykumar123?',
     }
 }
 
@@ -124,7 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -137,13 +139,13 @@ AUTH_USER_MODEL = 'authentication.UserModel'
 
 BILL_SESSION_ID = 'bill'
 
-REDIS_HOST = ALLOWED_HOSTS[0]
+REDIS_HOST = 'redis://localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
 
 # CELERY SETTINGS
-CELERY_BROKER_URL = 'redis://{}:6379'.format(ALLOWED_HOSTS[0])
-CELERY_RESULT_BACKEND = 'redis://{}:6379'.format(ALLOWED_HOSTS[0])
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json', ]
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'

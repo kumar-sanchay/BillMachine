@@ -1,2 +1,0 @@
-{% load static %}
-{% extends '{% static "css/base/base.css" %}' %}
