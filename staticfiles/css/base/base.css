@@ -1,0 +1,755 @@
+
+body{
+	margin:0;
+}
+
+.split{
+	display:grid;
+	grid-template-rows:auto auto;
+	height:100%;
+}
+
+.left{
+	background:#0099ff;
+	padding:8px;
+}
+
+.right{
+	background:#eee;
+	overflow-y: none;
+	padding:8px;
+}
+
+.profile-pic{
+	width:100%;
+	height:100%;
+	text-align:center;
+}
+
+.profile-img{
+	width:100px;
+	height:100px;
+	border-radius:50px;
+	border-color:#fff;
+	border-width:2px;
+	border-style:solid;
+}
+
+.username{
+	font-size:1.3em;
+	color:#fff;
+	font-weight:900;
+}
+
+.full-name{
+	color:#fff;
+	font-size:1.2em;
+}
+
+.company-list{
+	width:100%;
+	border-style:solid;
+	border-width:1px;
+	border-color:#fff;
+	text-align:left;
+	padding-top:10px;
+	padding-bottom:10px;
+	background:#fff;
+}
+
+details{
+	user-select:none;
+
+}
+
+.details-onn{
+	background:#fff;
+	padding-left:20px;
+}
+.detail-summary{
+	color:#0099ff;
+	padding-left:10px;
+	}
+
+.details-onn a{
+	text-decoration:none;
+	color:#0099ff;
+}
+
+summary{
+	width:100%;
+}
+
+summary::-webkit-details-marker {
+	color:#0099ff;
+}
+
+summary::marker {
+	color:#0099ff;
+}
+
+ul{
+	list-style:none;
+}
+ul li{
+	margin-top:10px;
+}
+
+ul li::before{
+	content:"\2022";
+	color:#0099ff;
+	font-weight:bold;
+	display:inline-block;
+	width:1em;
+	margin-left:-1em;
+}
+
+.inner-ul li .inner-list{
+	color:#696969;
+}
+
+.inner-ul li::before{
+	content:"\2022";
+	color:#696969;
+	font-weight:bold;
+	display:inline-block;
+	width:1em;
+	margin-left:-1em;
+}
+
+.bill-btn{
+	width:100%;
+	height:2rem;
+	background:#0099ff;
+	border-width:1px;
+	border-color:#fff;
+	margin-top:10px;
+	color:#fff;
+}
+
+.company-created{
+	display:grid;
+	grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr));
+	background:#fff;
+	width:99%;
+	margin-top:8px;
+	padding:5px;
+}
+
+.img-class{
+	text-align:center;
+}
+
+.img-class-obj{
+	height:100px;
+	width:100px;
+}
+
+.title{
+	text-align:center;
+}
+
+.main-title{
+	font-weight: 800;
+	color:#696969;
+	font-size: 1.2em;
+}
+
+.show-btn{
+	width:100%;
+	line-height:2em;
+	background:#0099ff;
+	color:#fff;
+	border-color:#0099ff;
+	border-width:1px;
+}
+
+.show-btn:hover{
+	background:#fff;
+	color:#0099ff;
+}
+
+.remove-btn{
+	width:100%;
+	line-height:2em;
+	background:#fff;
+	color:#DC143C;
+	border-color:#DC143C;
+	border-width:1px;
+	margin-top:8px;
+}
+
+.remove-btn:hover{
+	background:#DC143C;
+	color:#fff;
+}
+
+.show-btn-cls{
+	text-align:center;
+	padding:2px;
+}
+
+.recent-title-msg{
+	width:99%;
+	background:#90EE90;
+	padding:5px;
+}
+
+.recent-title-msg p{
+	font-weight: 800;
+	color:#fff;
+	font-size: 1.2em;
+}
+
+.company-details{
+	width:99%;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:5px;
+	padding-right:5px;
+	background:#fff;
+	margin-top:3px;
+}
+
+.company-details details summary{
+	color:#696969;
+	font-weight:700;
+	font-size:1.2em;
+}
+
+.company-details-list{
+	width:100%;
+	background:#fff;
+	display:grid;
+	grid-template-columns:1fr 1fr;
+}
+
+.company-details-val{
+	color:#696969;
+}
+
+.company-details-heading{
+	font-weight:600;
+}
+
+.bill-msg{
+	width:99%;
+	padding:1px 5px 1px 5px;
+	background:#CCCC00;
+	color:#fff;
+	font-size:1.2em;
+	margin-top:10px;
+}
+
+.download-link-div{
+	margin-top:8px;
+}
+.download-link{
+
+	color:#0099ff;
+}
+
+.company-details{
+	width:99%;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:5px;
+	padding-right:5px;
+	background:#fff;
+	margin-top:3px;
+}
+
+.company-details details summary{
+	color:#696969;
+	font-weight:700;
+	font-size:1.2em;
+}
+
+.company-details-list{
+	width:100%;
+	background:#fff;
+	display:grid;
+	grid-template-columns:1fr 1fr;
+}
+
+.company-details-val{
+	color:#696969;
+}
+
+.company-details-heading{
+	font-weight:600;
+}
+
+.bill-msg{
+	width:99%;
+	padding:1px 5px 1px 5px;
+	background:#CCCC00;
+	color:#fff;
+	font-size:1.2em;
+	margin-top:10px;
+}
+
+.download-link-div{
+	margin-top:8px;
+}
+.download-link{
+
+	color:#0099ff;
+}
+
+/*Company Css*/
+
+.company-details{
+	width:99%;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:5px;
+	padding-right:5px;
+	background:#fff;
+	margin-top:3px;
+}
+
+.company-details details summary{
+	color:#696969;
+	font-weight:700;
+	font-size:1.2em;
+}
+
+.company-details-list{
+	width:100%;
+	background:#fff;
+	display:grid;
+	grid-template-columns:1fr 1fr;
+}
+
+.company-details-val{
+	color:#696969;
+}
+
+.company-details-heading{
+	font-weight:600;
+}
+
+.bill-msg{
+	width:99%;
+	padding:1px 5px 1px 5px;
+	background:#CCCC00;
+	color:#fff;
+	font-size:1.2em;
+	margin-top:10px;
+}
+
+.download-link-div{
+	margin-top:8px;
+}
+.download-link{
+
+	color:#0099ff;
+}
+
+/*Create Company Css*/
+.main-div-create-company{
+	background:#fff;
+	display:grid;
+	grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr));
+	grid-gap:5px;
+	padding:8px;
+	justify-items:center;
+}
+
+.main-div-create-company input{
+	width:90%;
+	line-height:2.2em;
+	border-radius:5px;
+	margin-right:15px;
+	padding-left:8px;
+	border:0;
+	background:#eee;
+	padding:3px;
+}
+
+.input-create-company{
+    width:90%;
+	line-height:2.2em;
+	border-radius:5px;
+	margin-right:15px;
+	padding-left:8px;
+	border:0;
+	background:#eee;
+	padding:3px;
+}
+
+.main-div-create-company textarea{
+	width:90%;
+	height:5em;
+	border-radius:5px;
+	margin-right:15px;
+	padding-left:8px;
+	border:0;
+	background:#eee;
+	line-height:30px;
+}
+
+.list-create-company{
+	background:#fff;
+	display:grid;
+	grid-template-columns:3fr 1fr;
+	grid-gap:5px;
+	padding:8px;
+	justify-items:center;
+
+}
+
+.add_title_btn-create-company{
+	background:#fff;
+	padding:8px;
+	text-align:center;
+}
+
+.add_title_btn-create-company button{
+	background:#0099ff;
+	color:#fff;
+	width:200px;
+	border:0;
+	line-height:2em;
+}
+
+.remove-btn-create-company{
+	background:#fff;
+	color:#0099ff;
+	border-color:#0099ff;
+}
+
+.remove-btn-create-company:hover{
+
+	background:#0099ff;
+	color:#fff;
+}
+
+.list-create-company p{
+	grid-column:1/span 2;
+}
+
+/*Profile-Settings*/
+.back-view{
+	background:#fff;
+	width:99%;
+	padding:5px;
+	margin-top:5px;
+}
+
+.back-view:hover{
+	background:#eee;
+}
+
+.back-view-anchor{
+    color:#000;
+    text-decoration:none;
+}
+
+/*Change Personal Details*/
+
+.change-personal-details{
+    background:#fff;
+    padding:5px;
+}
+
+.change-personal-details-input{
+    width:96%;
+	line-height:2.2em;
+	border-radius:5px;
+	margin-right:15px;
+	padding-left:8px;
+	border:0;
+	background:#eee;
+	padding:3px;
+}
+
+.change-personal-details-btn{
+    line-height:2.2em;
+    background:#0099ff;
+    color:#fff;
+    border-color:#0099ff;
+}
+
+.change-personal-details-btn:hover{
+    background:#fff;
+    color:#0099ff;
+}
+
+.add-field-div{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+}
+
+/*Search-Field Css*/
+
+.search-field-main{
+	display:grid;
+	grid-template-columns:repeat(2, 1fr);
+	grid-gap:8px;
+	background:#fff;
+}
+
+.search-field-main label{
+	text-align:right;
+	font-size:1.2em;
+}
+
+.search-field-main input[type=radio]{
+	margin-left:15px;
+	padding:2px;
+	margin-top:5px;
+}
+
+.search-field-btn-class{
+	display:grid;
+	grid-template-columns:repeat(auto-fit, minmax(20rem, 1fr));
+	grid-gap:5px;
+}
+
+.search-field-button-submit{
+	background:#0099ff;
+	color:#fff;
+	padding:8px;
+	border-color:#0099ff;
+}
+
+.search-field-button-submit:hover{
+	background:#fff;
+	color:#0099ff;
+}
+
+.search-field-button-afterwards{
+	background:#fff;
+	color:#0099ff;
+	padding:8px;
+	border-color:#0099ff;
+}
+
+.search-field-button-afterwards:hover{
+	background:#0099ff;
+	color:#fff;
+}
+
+.search-field-btn{
+	text-align:center;
+	margin-top:10px;
+}
+
+.search-field-msg{
+	text-align:center;
+}
+
+/*Add Expression in CSS*/
+
+.white-background{
+    background:#fff;
+}
+.expression-top_label{
+	display:grid;
+	grid-template-columns:repeat(auto-fit, minmax(20rem, 1fr));
+	justify-items:center;
+	padding:8px;
+}
+
+.expression-input-class{
+	width:100%;
+}
+
+input{
+	width:95%;
+	line-height:2.2em;
+	border-radius:5px;
+	border-width:0;
+	background:#eee;
+	padding:5px;
+}
+
+.expression-explain h3{
+	text-align:center;
+	font-size:1.2em;
+}
+
+.expression-explain img{
+	display:block;
+	margin: 0 auto;
+}
+
+.expression-save-btn{
+	background:#0099ff;
+	color:#fff;
+	border-color:#0099ff;
+	width:200px;
+	line-height:2em;
+	display:block;
+	margin:0 auto;
+}
+
+.expression-save-btn:hover{
+	background:#fff;
+	color:#0099ff;
+
+}
+
+/*Add Default Data CSS*/
+
+
+.add-default-msg{
+	text-align:center;
+}
+
+.add-default-input-div{
+	display:grid;
+	grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr));
+	grid-gap:8px;
+}
+
+.add-default-input-div input{
+	width:90%;
+	line-height:1.2em;
+	background:#eee;
+	border-radius:5px;
+	padding:8px;
+	border-width:0;
+}
+
+.add-default-label-class{
+	margin-left:6%;
+	padding:3px;
+}
+
+.add-default-input-class{
+	text-align:center;
+}
+
+.add-default-button-submit{
+	background:#0099ff;
+	color:#fff;
+	padding:8px;
+	border-color:#0099ff;
+}
+
+.add-default-button-submit:hover{
+	background:#fff;
+	color:#0099ff;
+}
+
+.add-default-btn{
+	text-align:center;
+}
+
+/*Show Default Data*/
+
+.main-div-table{
+	display:block;
+	overflow-x: auto;
+	position: absolute;
+	width: 98%;
+	background: #fff;
+}
+
+.main-div-table table td{
+	background: #f2f2f2;
+
+}
+
+.main-div-table th{
+	padding-left:5rem;
+	padding-right:5rem;
+}
+
+.main-div-table td{
+	padding:5px;
+	text-align: center;
+}
+
+.table-delete-button{
+	background: #0099ff;
+	color: #fff;
+	padding: 2px;
+	border-color: #0099ff;
+	width: 70px;
+}
+
+.table-delete-button:hover{
+	background: #fff;
+	color: #0099ff;
+}
+
+.default-table{
+    display: block;
+}
+@media screen and (min-width:800px){
+	.split{
+		display:grid;
+		grid-template-rows:none;
+		grid-template-columns:1fr 3fr;
+		position:fixed;
+		width:100%;
+		height:100%;
+	}
+
+	.left{
+		height:100%;
+	}
+
+	.company-created{
+		display:grid;
+		grid-template-columns:1fr 3fr 1fr;
+	}
+
+	.right{
+		overflow-y: auto;
+	}
+
+	.title{
+		text-align:left;
+	}
+
+	/*Create Company*/
+	.main-div-create-company{
+	background:#fff;
+	display:grid;
+	grid-template-columns:repeat(2, 1fr);
+	grid-gap:5px;
+	}
+
+	.main-div-create-company h3{
+		grid-column:1/span 2;
+	}
+
+	.list-create-company{
+	background:#fff;
+	display:grid;
+	grid-template-columns:3fr 1fr;
+	grid-gap:5px;
+	padding:8px;
+	justify-items:center;
+
+	}
+
+	/*Add Expression Css*/
+	.expression-top_label{
+	display:grid;
+	grid-template-columns:repeat(2, 1fr);
+	justify-items:center;
+	padding:8px;
+	}
+
+	/*Add Default Data CSS*/
+	.add-default-input-div{
+	display:grid;
+	grid-template-columns:repeat(2, 1fr);
+	grid-gap:8px;
+    }
+
+    .add-default-label-class{
+        text-align:center;
+    }
+
+    /* SHow Default Value*/
+    .main-div-table{
+        position: relative;
+    }
+}

@@ -1,0 +1,56 @@
+
+.add-default-msg{
+	text-align:center;
+}
+
+.add-default-input-div{
+	display:grid;
+	grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr));
+	grid-gap:8px;
+}
+
+.add-default-input-div input{
+	width:90%;
+	line-height:1.2em;
+	background:#eee;
+	border-radius:5px;
+	padding:8px;
+	border-width:0;
+}
+
+.add-default-label-class{
+	margin-left:6%;
+	padding:3px;
+}
+
+.add-default-input-class{
+	text-align:center;
+}
+
+.add-default-button-submit{
+	background:#0099ff;
+	color:#fff;
+	padding:8px;
+	border-color:#0099ff;
+}
+
+.add-default-button-submit:hover{
+	background:#fff;
+	color:#0099ff;
+}
+
+.add-default-btn{
+	text-align:center;
+}
+
+@media screen and (min-width:800px){
+    .add-default-input-div{
+	display:grid;
+	grid-template-columns:repeat(2, 1fr);
+	grid-gap:8px;
+    }
+
+    .add-default-label-class{
+        text-align:center;
+    }
+}
